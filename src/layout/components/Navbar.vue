@@ -11,8 +11,8 @@
     <div class="right-menu">
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
-          <img src="@/assets/common/bigUserHeader.png" class="user-avatar">
-          <span class="name">管理员</span>
+          <img v-imagerror="defaultImg" :src="staffPhoto" class="user-avatar">
+          <span class="name">{{ name }}</span>
           <i class="el-icon-caret-bottom" />
           <el-dropdown-menu slot="dropdown" class="user-dropdown">
             <router-link to="/">
@@ -27,7 +27,8 @@
               <span style="display:block;">退出登录</span>
             </el-dropdown-item>
           </el-dropdown-menu>
-        </div></el-dropdown>
+        </div>
+      </el-dropdown>
     </div>
   </div>
 </template>
@@ -40,10 +41,16 @@ export default {
   components: {
     Hamburger
   },
+  data() {
+    return {
+      defaultImg: require('@/assets/common/head.jpeg') // 直接写路径打包后就会错误
+    }
+  },
   computed: {
     ...mapGetters([
       'sidebar',
-      'avatar'
+      'name',
+      'staffPhoto'
     ])
   },
   methods: {
@@ -64,7 +71,7 @@ export default {
   overflow: hidden;
   position: relative;
   background-image: -webkit-linear-gradient(left, #3d6df8, #5b8cff);
-  box-shadow: 0 1px 4px rgba(0,21,41,.08);
+  box-shadow: 0 1px 4px rgba(0, 21, 41, .08);
 
   .hamburger-container {
     line-height: 46px;
@@ -72,30 +79,33 @@ export default {
     float: left;
     cursor: pointer;
     transition: background .3s;
-    -webkit-tap-highlight-color:transparent;
+    -webkit-tap-highlight-color: transparent;
 
     &:hover {
       background: rgba(0, 0, 0, .025)
     }
   }
+
   .app-breadcrumb {
-  display: inline-block;
-  font-size: 18px;
-  line-height: 50px;
-  margin-left: 10px;
-  color: #ffffff;
-  cursor: text;
-  .breadBtn {
-    background: #84a9fe;
-    font-size: 14px;
-    padding: 0 10px;
     display: inline-block;
-    height: 30px;
-    line-height: 30px;
-    border-radius: 10px;
-    margin-left: 15px;
+    font-size: 18px;
+    line-height: 50px;
+    margin-left: 10px;
+    color: #ffffff;
+    cursor: text;
+
+    .breadBtn {
+      background: #84a9fe;
+      font-size: 14px;
+      padding: 0 10px;
+      display: inline-block;
+      height: 30px;
+      line-height: 30px;
+      border-radius: 10px;
+      margin-left: 15px;
+    }
   }
-}
+
   .breadcrumb-container {
     float: left;
   }
@@ -109,13 +119,14 @@ export default {
       outline: none;
     }
 
-   .name {
-          color: #fff;
-          vertical-align: middle;
-          margin-left:5px;
-   }
-   .user-dropdown {
-           color: #fff;
+    .name {
+      color: #fff;
+      vertical-align: middle;
+      margin-left: 5px;
+    }
+
+    .user-dropdown {
+      color: #fff;
     }
 
     .right-menu-item {
@@ -150,7 +161,7 @@ export default {
           border-radius: 15px;
           vertical-align: middle;
 
-   }
+        }
 
         .el-icon-caret-bottom {
           cursor: pointer;
@@ -163,5 +174,4 @@ export default {
       }
     }
   }
-}
-</style>
+}</style>
