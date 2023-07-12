@@ -1,4 +1,4 @@
-import { getToken, setToken, removeToken } from '@/utils/auth'
+import { getToken, setToken, removeToken, setTimeStamp } from '@/utils/auth'
 import { login, getUserInfo, getUserDetailById } from '@/api/user'
 
 // 状态
@@ -35,6 +35,8 @@ const actions = {
     const result = await login(data) // 实际上就是一个promise  result就是执行的结果
     // actions 修改state 必须通过mutations
     context.commit('setToken', result)
+    // 登录成功后保存时间戳用于token校验
+    setTimeStamp()
   },
 
   // 获取用户资料action
@@ -45,6 +47,13 @@ const actions = {
     // 此时已经获取到了用户的基本资料 迫不得已 为了头像再次调用一个接口
     context.commit('setUserInfo', baseResult) // 提交mutations
     return baseResult// 这里为什么要返回 为后面埋下伏笔
+  },
+  // 登出的action
+  logout(context) {
+    // 删除token
+    context.commit('removeToken') // 不仅仅删除了vuex中的 还删除了缓存中的
+    // 删除用户资料
+    context.commit('removeUserInfo') // 删除用户信息
   }
 
 }
