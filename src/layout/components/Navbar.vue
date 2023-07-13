@@ -2,8 +2,8 @@
   <div class="navbar">
     <hamburger :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar" />
     <div class="app-breadcrumb">
-      科技股份有限公司
-      <span class="breadBtn">体验版</span>
+      GGboy科技有限公司
+      <span class="breadBtn">董事长体验版</span>
     </div>
 
     <!-- <breadcrumb class="breadcrumb-container" /> -->
