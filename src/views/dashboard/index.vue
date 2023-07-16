@@ -1,6 +1,14 @@
 <template>
   <div class="dashboard-container">
     <div class="dashboard-text">name: {{ name }}</div>
+    <PageTools :show-before="true">
+      <template #before>
+        <span>搭建的撒娇的拉动</span>
+      </template>
+      <template #after>
+        <el-button>撒大大</el-button>
+      </template>
+    </PageTools>
   </div>
 </template>
 
