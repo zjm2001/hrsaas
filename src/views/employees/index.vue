@@ -4,7 +4,7 @@
       <page-tools :show-before="true">
         <span slot="before">共{{ page.total }}条记录</span>
         <template slot="after">
-          <el-button size="small" type="warning">excel导入</el-button>
+          <el-button size="small" type="warning" @click="$router.push('/import')">excel导入</el-button>
           <el-button size="small" type="danger">excel导出</el-button>
           <el-button size="small" type="primary" @click="showDialog = true">新增员工</el-button>
         </template>
@@ -112,7 +112,7 @@ export default {
       try {
         await this.$confirm('确定要删除该部门吗', '提示', { confirmButtonText: '确定', cancelButtonText: '取消', type: 'warning' })
         await delEmployee(id)
-        this.getEmployeeList()
+        await this.getEmployeeList()
         this.$message.success('删除员工成功')
       } catch (error) {
         this.$message(error)
