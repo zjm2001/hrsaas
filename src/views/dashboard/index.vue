@@ -9,6 +9,7 @@
         <el-button>撒大大</el-button>
       </template>
     </PageTools>
+    <UploadExcel />
   </div>
 </template>
 
