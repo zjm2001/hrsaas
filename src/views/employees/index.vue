@@ -5,7 +5,7 @@
         <span slot="before">共{{ page.total }}条记录</span>
         <template slot="after">
           <el-button size="small" type="warning" @click="$router.push('/import')">excel导入</el-button>
-          <el-button size="small" type="danger">excel导出</el-button>
+          <el-button size="small" type="danger" @click="exportData">excel导出</el-button>
           <el-button size="small" type="primary" @click="showDialog = true">新增员工</el-button>
         </template>
       </page-tools>
@@ -60,6 +60,7 @@
 import { getEmployeeList, delEmployee } from '@/api/employees'
 import EmployeeEnum from '@/api/constant/employees'
 import AddDemployee from './components/add-employee'
+import { formatDate } from '@/filters'
 export default {
   components: {
     AddDemployee
@@ -117,6 +118,50 @@ export default {
       } catch (error) {
         this.$message(error)
       }
+    },
+    /** 点击导出按钮 */
+    exportData() {
+      // 表头对应关系
+      const headers = {
+        '姓名': 'username',
+        '手机号': 'mobile',
+        '入职日期': 'timeOfEntry',
+        '聘用形式': 'formOfEmployment',
+        '转正日期': 'correctionTime',
+        '工号': 'workNumber',
+        '部门': 'departmentName'
+      }
+
+      import('@/vendor/Export2Excel').then(async excel => {
+        const { rows } = await getEmployeeList({ page: 1, size: this.page.total })
+        const data = this.formatJson(headers, rows) // 返回的data就是 要导出的结构
+        const multiHeader = [['姓名', '主要信息', '', '', '', '', '部门']]
+        const merges = ['A1:A2', 'B1:F1', 'G1:G2'] // 要合并效果
+        excel.export_json_to_excel({
+          header: Object.keys(headers), // 表头
+          data,
+          filename: '员工资料表',
+          multiHeader,
+          merges
+
+        })
+      })
+    },
+    formatJson(headers, rows) {
+      return rows.map(item => {
+        // item是一个对象
+        return Object.keys(headers).map(key => {
+          if (headers[key] === 'timeOfEntry' || headers[key] === 'correctionTime') {
+            // 格式化日期
+            return formatDate(item[headers[key]])
+          } else if (headers[key] === 'formOfEmployment') {
+            const obj = EmployeeEnum.hireType.find(obj => obj.id === item[headers[key]])
+            return obj ? obj.value : '未知'
+          }
+          // 应为headers[key]为字符串这也写就是item.'mobile'所以会报错必须使用[]
+          return item[headers[key]]
+        })
+      })
     }
   }
 
