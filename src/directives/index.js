@@ -10,5 +10,8 @@ export const imagerror = {
       // dom可以注册error事件
       dom.src = options.value // 这里不能写死
     }
+  },
+  componentUpdated(dom, options) {
+    dom.src = dom.src || options.value
   }
 }

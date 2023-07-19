@@ -14,21 +14,32 @@
         <el-table border :data="list">
           <el-table-column label="序号" width="120" sortable type="index" />
           <el-table-column label="姓名" width="180" sortable prop="username" />
-          <el-table-column label="工号" width="180" sortable prop="workNumber" />
+          <el-table-column label="头像" align="center" width="180">
+            <template slot-scope="{row}">
+              <img
+                slot="reference"
+                v-imagerror="defaultImg"
+                :src="row.staffPhoto "
+                style="border-radius: 50%; width: 100px; height: 100px; padding: 10px"
+                alt=""
+              >
+            </template>
+          </el-table-column>
+          <el-table-column label="工号" width="160" sortable prop="workNumber" />
           <el-table-column label="聘用形式" width="120" sortable prop="formOfEmployment" :formatter="formatEmployment" />
-          <el-table-column label="部门" width="180" sortable prop="departmentName" />
+          <el-table-column label="部门" width="160" sortable prop="departmentName" />
           <!-- <el-table-column label="入职时间" width="250" sortable prop="timeOfEntry" /> -->
           <el-table-column label="入职时间" sortable="" align="center" width="250">
             <!-- 作用域插槽 -->
             <template v-slot="{ row }">{{ row.timeOfEntry | formatDate }}</template>
           </el-table-column>
-          <el-table-column label="账户状态" width="180" sortable prop="enableState">
+          <el-table-column label="账户状态" width="120" sortable prop="enableState">
             <template slot-scope="{ row }">
               <!-- 根据当前状态来确定 是否打开开关 -->
               <el-switch :value="row.enableState === '1'" />
             </template>
           </el-table-column>
-          <el-table-column label="操作" sortable fixed="right" width="380">
+          <el-table-column label="操作" sortable fixed="right" width="280">
             <template slot-scope="{ row }">
               <el-button type="text" size="small" @click="$router.push(`/employees/detail/${row.id}`)">查看</el-button>
               <el-button type="text" size="small">转正</el-button>
@@ -68,6 +79,7 @@ export default {
   },
   data() {
     return {
+      defaultImg: require('@/assets/common/head.jpeg'), // 直接写路径打包后就会错误
       loading: false,
       list: [], // 接数据的
       page: {

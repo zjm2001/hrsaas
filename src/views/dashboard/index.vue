@@ -10,6 +10,7 @@
       </template>
     </PageTools>
     <UploadExcel />
+    <ImageUpload />
   </div>
 </template>
 
