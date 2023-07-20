@@ -12,6 +12,7 @@ import '@/permission' // permission control
 import * as directives from '@/directives'
 import Component from '@/components'
 import * as filters from '@/filters' // 引入工具类
+import Print from 'vue-print-nb'
 // 注册自定义指令
 // 遍历所有的导出的指令对象 完成自定义全局注册
 Object.keys(directives).forEach(key => {
@@ -19,6 +20,7 @@ Object.keys(directives).forEach(key => {
   Vue.directive(key, directives[key])
 })
 
+Vue.use(Print)
 Vue.use(ElementUI, { locale })
 
 Vue.use(Component) // 注册自己的插件
