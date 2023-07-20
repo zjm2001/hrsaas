@@ -46,7 +46,7 @@
               <el-button type="text" size="small">转正</el-button>
               <el-button type="text" size="small">调岗</el-button>
               <el-button type="text" size="small">离职</el-button>
-              <el-button type="text" size="small">角色</el-button>
+              <el-button type="text" size="small" @click="editRole(row.id)">角色</el-button>
               <el-button type="text" size="small" @click="deleteEmployee(row.id)">删除</el-button>
             </template>
           </el-table-column>
@@ -70,6 +70,8 @@
         <canvas ref="myCanvas" />
       </el-row>
     </el-dialog>
+    <!-- 分配权限弹层组件 -->
+    <AssignRole ref="assignRole" :show-role-dialog.sync="showRoleDialog" :user-id="userId" />
   </div>
 </template>
 
@@ -79,9 +81,11 @@ import EmployeeEnum from '@/api/constant/employees'
 import AddDemployee from './components/add-employee'
 import { formatDate } from '@/filters'
 import QrCode from 'qrcode'
+import AssignRole from './components/assign-role.vue'
 export default {
   components: {
-    AddDemployee
+    AddDemployee,
+    AssignRole
 
   },
   data() {
@@ -95,11 +99,15 @@ export default {
         total: 0 // 总数
       },
       showDialog: false, // 新增弹层控制
-      showCodeDialog: false// 点击头像显示二维码弹层
+      showCodeDialog: false, // 点击头像显示二维码弹层
+      showRoleDialog: false,
+      userId: null
+
     }
   },
   created() {
     this.getEmployeeList()
+    // this.$store.dispatch('user/getUserInfo')
   //   if (this.list.length === 30) {
   //     return  1
   //   } else {
@@ -196,6 +204,12 @@ export default {
       } else {
         this.$message.warning('该用户还未上传头像')
       }
+    },
+    /** 角色按钮 */
+    async editRole(id) {
+      this.userId = id
+      await this.$refs.assignRole.getUserDetailById(id) // 父组件调用子组件方法
+      this.showRoleDialog = true
     }
   }
 

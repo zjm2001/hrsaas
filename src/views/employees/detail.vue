@@ -81,6 +81,9 @@ export default {
         await this.$refs.userForm.validate()
         await saveUserDetailById({ ...this.userInfo, password: this.userInfo.password2 }) // 将新密码的值替换原密码的值
         this.$message.success('保存成功')
+        if (this.$store.getters.userId === this.userId) {
+          this.$store.dispatch('user/getUserInfo')
+        }
       } catch (error) {
         console.log(error)
       }
