@@ -13,6 +13,7 @@ import * as directives from '@/directives'
 import Component from '@/components'
 import * as filters from '@/filters' // 引入工具类
 import Print from 'vue-print-nb'
+import checkPermission from '@/mixin/checkPermission'
 // 注册自定义指令
 // 遍历所有的导出的指令对象 完成自定义全局注册
 Object.keys(directives).forEach(key => {
@@ -31,6 +32,8 @@ Object.keys(filters).forEach(key => {
   // 注册过滤器
   Vue.filter(key, filters[key])
 })
+// 全局混入检查对象(所有组件都要一个检查方法)
+Vue.mixin(checkPermission)
 new Vue({
   el: '#app',
   router,
