@@ -11,6 +11,7 @@ import attendancesRouter from './modules/attendances'
 import salarysRouter from './modules/salarys'
 import settingRouter from './modules/setting'
 import socialRouter from './modules/social'
+import userRouter from './modules/user'
 
 Vue.use(Router)
 // 动态路由
@@ -56,7 +57,8 @@ export const constantRoutes = [
     path: '/404',
     component: () => import('@/views/404'),
     hidden: true
-  }
+  },
+  userRouter // 集成模块放置路由
   // // 404 page must be placed at the end !!!
   // { path: '*', redirect: '/404', hidden: true }
 ]
