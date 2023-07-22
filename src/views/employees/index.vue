@@ -11,10 +11,10 @@
       </page-tools>
       <!-- 放置表格和分页 -->
       <el-card v-loading="loading">
-        <el-table border :data="list">
-          <el-table-column label="序号" width="120" sortable type="index" />
-          <el-table-column label="姓名" width="180" sortable prop="username" />
-          <el-table-column label="头像" align="center" width="180">
+        <el-table :data="list">
+          <el-table-column label="序号" sortable type="index" />
+          <el-table-column label="姓名" sortable prop="username" />
+          <el-table-column label="头像" align="center" width="120">
             <template slot-scope="{row}">
               <img
                 slot="reference"
@@ -26,15 +26,16 @@
               >
             </template>
           </el-table-column>
-          <el-table-column label="工号" width="160" sortable prop="workNumber" />
-          <el-table-column label="聘用形式" width="120" sortable prop="formOfEmployment" :formatter="formatEmployment" />
-          <el-table-column label="部门" width="160" sortable prop="departmentName" />
+          <el-table-column label="手机号" sortable prop="mobile" />
+          <el-table-column label="工号" sortable prop="workNumber" />
+          <el-table-column label="聘用形式" sortable prop="formOfEmployment" :formatter="formatEmployment" />
+          <el-table-column label="部门" sortable prop="departmentName" />
           <!-- <el-table-column label="入职时间" width="250" sortable prop="timeOfEntry" /> -->
-          <el-table-column label="入职时间" sortable="" align="center" width="250">
+          <el-table-column label="入职时间" sortable="" align="center">
             <!-- 作用域插槽 -->
             <template v-slot="{ row }">{{ row.timeOfEntry | formatDate }}</template>
           </el-table-column>
-          <el-table-column label="账户状态" width="120" sortable prop="enableState">
+          <el-table-column label="账户状态" sortable prop="enableState">
             <template slot-scope="{ row }">
               <!-- 根据当前状态来确定 是否打开开关 -->
               <el-switch :value="row.enableState === '1'" />

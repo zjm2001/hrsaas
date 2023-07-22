@@ -65,7 +65,7 @@
       <!-- 下方提示 -->
       <div class="tips">
         <span style="margin-right:20px;">账号: 13800000002</span>
-        <span> 密码: 123456</span>
+        <span> 密码: hm#qd@23!</span>
       </div>
 
     </el-form>
@@ -93,7 +93,7 @@ export default {
     return {
       loginForm: {
         mobile: '13800000002',
-        password: '123456'
+        password: 'hm#qd@23!'
       },
       loginRules: {
         mobile: [{ required: true, trigger: 'blur', message: '手机号不能为空' }, {
