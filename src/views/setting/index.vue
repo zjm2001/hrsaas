@@ -83,19 +83,24 @@
         node-key="id"
       />
       <!-- 确定 取消 -->
-      <el-row slot="footer" type="flex" justify="center">
-        <el-col :span="6">
-          <el-button type="primary" size="small" @click="btnPermOK">确定</el-button>
-          <el-button size="small" @click="btnPermCancel">取消</el-button>
-        </el-col>
-      </el-row>
+      <template #footer>
+        <el-row type="flex" justify="center">
+          <el-col :span="6">
+            <el-button type="primary" size="small" @click="btnPermOK">确定</el-button>
+            <el-button size="small" @click="btnPermCancel">取消</el-button>
+          </el-col>
+        </el-row>
+      </template>
+
     </el-dialog>
 
   </div>
 </template>
 
 <script>
-import { getRoleList, getCompanyInfo, deleteRole, getRoleDetail, updateRole, addRole } from '@/api/setting'
+import { getRoleList, getCompanyInfo, deleteRole, getRoleDetail, updateRole, addRole, assignPerm } from '@/api/setting'
+import { getPermissionList } from '@/api/permisson'
+import { tranListToTreeData } from '@/utils'
 export default {
   data() {
     return {
@@ -149,7 +154,7 @@ export default {
       this.formData = await getCompanyInfo(this.companyId)
     },
     /** 点击删除 */
-    async  deleteRole(id) {
+    async deleteRole(id) {
       this.$confirm('确定要删除该角色吗', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -198,6 +203,27 @@ export default {
       // 移除校验
       this.$refs.roleForm.resetFields()
       this.showDialog = false
+    },
+    async  assignPerm(id) {
+      this.permData = tranListToTreeData(await getPermissionList(), '0')
+      // 通过id拿到已选择权限
+      this.roleId = id
+      const { permIds } = await getRoleDetail(id)
+      this.selectCheck = permIds
+      this.showPermDialog = true
+    },
+    async btnPermOK() {
+      // 调用el-tree的方法ref使用获得对象
+      await assignPerm({
+        permIds: this.$refs.permTree.getCheckedKeys(),
+        id: this.roleId
+      })
+      this.$message.success('分配权限成功')
+      this.showPermDialog = false
+    },
+    btnPermCancel() {
+      this.selectCheck = [] // 重置数据
+      this.showPermDialog = false
     }
   }
 
