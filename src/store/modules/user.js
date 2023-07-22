@@ -1,5 +1,6 @@
 import { getToken, setToken, removeToken, setTimeStamp } from '@/utils/auth'
 import { login, getUserInfo, getUserDetailById } from '@/api/user'
+import { resetRouter } from '@/router'
 
 // 状态
 const state = {
@@ -46,7 +47,7 @@ const actions = {
     const baseResult = { ...result, ...baseInfo } // 将两个接口结果合并
     // 此时已经获取到了用户的基本资料 迫不得已 为了头像再次调用一个接口
     context.commit('setUserInfo', baseResult) // 提交mutations
-    return baseResult// 这里为什么要返回 为后面埋下伏笔
+    return result// 这里为什么要返回 为后面埋下伏笔
   },
   // 登出的action
   logout(context) {
@@ -54,6 +55,14 @@ const actions = {
     context.commit('removeToken') // 不仅仅删除了vuex中的 还删除了缓存中的
     // 删除用户资料
     context.commit('reomveUserInfo') // 删除用户信息
+    // 重置路由
+    resetRouter() // 点击登出重置路由
+    // 子模块调用子模块的action  默认情况下 子模块的context是子模块的(加了namespaced)
+    // 父模块 调用 子模块的action
+    context.commit('permission/setRoutes', [], { root: true })
+    // 子模块调用子模块的action
+    // 可以 将 commit的第三个参数 设置成  { root: true }
+    // 就表示当前的context不是子模块了 而是父模块
   }
 
 }
