@@ -26,7 +26,7 @@ export default {
     const myChart = echarts.init(this.$refs.myDiv)
     myChart.setOption({
       title: {
-        text: '基础雷达图'
+        text: '员工效率雷达图'
       },
       tooltip: {},
       legend: {
