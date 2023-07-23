@@ -6,6 +6,7 @@ export default {
   component: Layout,
 
   children: [{
+    name: 'permissions',
     path: '',
     component: () => import('@/views/permission'),
 

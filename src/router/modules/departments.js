@@ -6,6 +6,7 @@ export default {
   component: Layout,
 
   children: [{
+    name: 'departments',
     path: '',
     component: () => import('@/views/departments'),
 
