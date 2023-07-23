@@ -4,11 +4,13 @@
     <div class="app-breadcrumb">
       GGboy科技有限公司
       <span class="breadBtn">董事长体验版</span>
+
     </div>
 
     <!-- <breadcrumb class="breadcrumb-container" /> -->
 
     <div class="right-menu">
+      <screen-full class="right-menu-item" />
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
           <img v-imagerror="defaultImg" :src="staffPhoto" class="user-avatar">
@@ -136,7 +138,7 @@ export default {
       height: 100%;
       font-size: 18px;
       color: #5a5e66;
-      vertical-align: text-bottom;
+      vertical-align: middle;
 
       &.hover-effect {
         cursor: pointer;
@@ -175,4 +177,5 @@ export default {
       }
     }
   }
+
 }</style>
