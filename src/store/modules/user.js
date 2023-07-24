@@ -55,6 +55,8 @@ const actions = {
     context.commit('removeToken') // 不仅仅删除了vuex中的 还删除了缓存中的
     // 删除用户资料
     context.commit('reomveUserInfo') // 删除用户信息
+    // 清空tab栏
+    context.commit('tagsView/delTab', [], { root: true })
     // 重置路由
     resetRouter() // 点击登出重置路由
     // 子模块调用子模块的action  默认情况下 子模块的context是子模块的(加了namespaced)
