@@ -134,7 +134,7 @@ export default {
     // 格式化聘用形式
     formatEmployment(row, column, cellValue, index) {
       // 要去找 1所对应的值
-      const obj = EmployeeEnum.hireType.find(item => item.id === cellValue)
+      const obj = EmployeeEnum.hireType.find(item => item.id === Number(cellValue))
       return obj ? obj.value : '未知'
     },
     /** 点击删除 */
